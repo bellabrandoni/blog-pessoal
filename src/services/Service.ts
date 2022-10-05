@@ -2,7 +2,7 @@ import axios from "axios";
 
 //permite armazenar dentro do axios o endereço da minha api
 export const api = axios.create({
-    baseURL: "https://blogpessoalbackendgen.herokuapp.com/"
+    baseURL: "https://blogpessoal-cl8s.onrender.com"
 })
 
 //metodo asincrono contem 3 paramentro. O primeiro parametro(url:any)concatena a base url + a url da nossa api que se chama /usuario/logar
