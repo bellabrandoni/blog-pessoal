@@ -10,10 +10,10 @@ import './CadastroUsuario.css';
 
 function CadastroUsuario() {
 
-    //A variavel navigate será utilizada dentro do useEffect para que no momento em que o cadastro for efetivado e o usuário já tiver cadastrado vamos direcionar essa tela de cadastro para tela de login para que consiga efetuar o login com o usuario que acabou de cadastrado
-    let navigate = useNavigate();
+    //A variavel navigate será utilizada dentro do useEffect para que no momento em que o cadastro for efetivado e o usuário já tiver cadastrado vamos direcionar essa tela de cadastro para tela de login para que consiga efetuar o login com o usuario que acabou de ser cadastrado.
+    let history= useNavigate();
 
-    //Temos 2 states, o primeiro(confirmarSenha) = possui uma função(setConfirmarSenha) que será utilizada para verificar se o valor que o usuário digitou no campo confirmar senha é igual ao valor que o usuario digitou no campo senha e se forem iguais ele envia essas informações para cadastro
+    //Temos 2 states, o primeiro(confirmarSenha) = possui uma função(setConfirmarSenha) que será utilizada para verificar se o valor que o usuário digitou no campo confirmar senha é igual ao valor que o usuario digitou no campo senha e se forem iguais ele envia essas informações para cadastro.
     const [confirmarSenha,setConfirmarSenha] = useState<String>("")
     
     //O segundo State vai conter as inormações que serão enviadas para cadastro. Se não tem nenhuma informação(campos vazios) ele se mantem com valores padrões
@@ -25,7 +25,7 @@ function CadastroUsuario() {
             foto:'',
             senha: ''
         })
-        //Terceiro UseState = armazena os valores do retorno da api. Quando envio os dados para o cadastro a api efetiva o cadastro e devolve um JSON contendo os dados cadastrado e esses dados são gravados dentro de userResult
+        //Terceiro UseState=> setUserResult = armazena os valores do retorno da api. Quando envio os dados para o cadastro a api efetiva o cadastro e devolve um JSON contendo os dados cadastrado e esses dados são gravados dentro de userResult
     const [userResult, setUserResult] = useState<User>(
         {
             id: 0,
@@ -39,7 +39,7 @@ function CadastroUsuario() {
         //Verifica se o userResult(state que contém os dados retornados da api/cadsastrados)verificando se o id é diferente de 0, se for diferente de 0 não está mais utilizando os valores padrão, significa que já tem um valor cadastrado e então é direcionado para tela de login
     useEffect(() => {
         if (userResult.id !== 0) {
-            navigate("/login")
+            history("/login")
         }
     }, [userResult])
 
@@ -78,10 +78,10 @@ function CadastroUsuario() {
                 <Box paddingX={10}>
                     <form onSubmit={onSubmit}>
                         <Typography variant='h3' gutterBottom color='textPrimary' component='h3' align='center' className='textos2'>Cadastrar</Typography>
-                        <TextField value={user.nome} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='nome' label='nome' variant='outlined' name='nome' margin='normal' fullWidth />
-                        <TextField value={user.usuario} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)}id='usuario' label='usuario' variant='outlined' name='usuario' margin='normal'fullWidth />
-                        <TextField value={user.senha} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)}id='senha' label='senha' variant='outlined' name='senha' margin='normal' type='password' fullWidth />
-                        <TextField value={confirmarSenha} onChange={(e: ChangeEvent<HTMLInputElement>) => confirmarSenhaHandle(e)}id='confirmarSenha' label='confirmarSenha' variant='outlined' name='confirmarSenha' margin='normal' type='password' fullWidth />
+                        <TextField  required value={user.nome} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)} id='nome' label='nome' variant='outlined' name='nome' margin='normal' fullWidth />
+                        <TextField required value={user.usuario} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)}id='usuario' label='usuario' variant='outlined' name='usuario' margin='normal'fullWidth />
+                        <TextField required value={user.senha} onChange={(e: ChangeEvent<HTMLInputElement>) => updatedModel(e)}id='senha' label='senha' variant='outlined' name='senha' margin='normal' type='password' fullWidth />
+                        <TextField required value={confirmarSenha} onChange={(e: ChangeEvent<HTMLInputElement>) => confirmarSenhaHandle(e)}id='confirmarSenha' label='confirmarSenha' variant='outlined' name='confirmarSenha' margin='normal' type='password' fullWidth />
                         <Box marginTop={2} textAlign='center'>
                             <Link to='/login' className='text-decorator-none'>
                                 <Button variant='contained' color='secondary' className='btnCancelar'>
