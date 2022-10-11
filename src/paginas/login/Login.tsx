@@ -2,23 +2,20 @@ import React, { useState, ChangeEvent, useEffect } from 'react';
 import { Grid, Typography, TextField, Button } from '@material-ui/core';
 import { Box } from "@mui/material";
 import { Link, useNavigate } from 'react-router-dom';
+import useLocalStorage from 'react-use-localstorage';
 import { login } from '../../services/Service';
 import './Login.css';
 import UserLogin from '../../model/UserLogin';
 import './Login.css';
-import { useDispatch } from 'react-redux';
-import { addToken } from '../../store/tokens/action';
 
 function Login() {
 
     //UseNavigate = responsavel por redirecionar pra tela de home se a autentificação estive OK
-    //UseDispach recebe o token para poder autenticar 
+    // UseLocalStorage = grava o token que a api devolver num local storage do navegador(armazenamento interno do navegador ) toda vez que alguma requisição da api tiver que ser feita a localstorage é acessada
 
     let navigate = useNavigate();
 
-    const dispatch = useDispatch();
-
-    const [token, setToken] = useState('');
+    const [token, setToken] = useLocalStorage('token');
 
 
 
@@ -56,7 +53,6 @@ function Login() {
     //if = verifica se o token no localStorage está ou não vazio, se está ou não preenchido com o token que veio da api. navigate('/home) = aciona a variavel navigate + metodo de redirect redireciona pra pagina home ''
     useEffect(()=>{
         if(token !== '') {
-            dispatch(addToken(token))
             navigate('/home')
         }
     }, [token])
