@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokenReducer';
 import { addToken } from '../../../store/tokens/action';
+import { toast } from 'react-toastify';
 
 //O botão de Logout precisa excluir o token do localStorage, porque o token é quem garante a autenticalção e é por meio dele    que fazemos nossas requisições na api
 function Navbar() {
@@ -21,9 +22,19 @@ function Navbar() {
     const dispatch = useDispatch();
 
     // dispatch(addToken('')); -> Modifica o valor para vazio, assim, garantimos que o token será eliminado e por não ter o token ocorre o logout e somos enfim redirecionados para tela de login
+    //toast.info = exibe uma mensagem de usuário deslogado e como segundo parametro definimos a posição da notificação, além do tempo - 2000 milisegundos, possibilidade de ocultar a barra de progresso com o hide e possibilidade de fechar a notificação
     function goLogout() {
         dispatch(addToken(''));
-        alert("Usuário deslogado")
+        toast.info('Usuário deslogado', {
+            position: "top-right",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            theme: "colored",
+            progress: undefined,
+        });
         navigate('/login')
     }
 

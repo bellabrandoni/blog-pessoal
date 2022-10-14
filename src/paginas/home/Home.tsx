@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 import { TokenState } from './../../store/tokens/tokenReducer';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 function Home() {
     let navigate = useNavigate();
@@ -19,9 +20,17 @@ function Home() {
     //se há um token salvo então ele permanece altenticado, se não está salvo então é direcionado para tela de login
     useEffect(() => {
         if (token === "") {
-            alert("Você precisa estar logado")
-            navigate("/login")
-
+            toast.error('Você precisa estar logado', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "colored",
+                progress: undefined,
+            });
+                navigate("/login")
         }
     }, [token])
     return (

@@ -7,7 +7,7 @@ import Tema from '../../../model/Tema';
 import useLocalStorage from 'react-use-localstorage';
 import { useNavigate } from 'react-router-dom';
 import { busca } from '../../../services/Service';
-
+import { toast } from 'react-toastify';
 
 //Requisição dos temas, a const temas tem a função setTemas para atualizar com useState. O useState do tipo <Tema> inicializa com a model de tema num colchete vazio e o array também é inicializado vazio
 //Token é necessario no envio do Tema - pra isso precisamos capturar o Token que está armazenado no localStorage. o UseLocalStorage é inicializado com o valor 'token'
@@ -22,7 +22,16 @@ function ListaTema() {
 
     useEffect(() => {
         if (token === '') {
-            alert("Você precisa estar logado")
+            toast.error('Você precisa estar logado', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: false,
+                theme: "colored",
+                progress: undefined,
+            });
             navigate("/login")
         }
     }, [token])
@@ -30,7 +39,7 @@ function ListaTema() {
     //aguarda- await o metodo busca- passa os três parametos do metodo busca
     //'Autorization'-propriedade que recebe o token que vai autenticar a requisição dentor da api
     async function getTema() {
-        await busca("/tema", setTemas, {
+        await busca("/temas", setTemas, {
             headers: {
                 'Authorization': token
             }
