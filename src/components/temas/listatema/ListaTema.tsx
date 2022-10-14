@@ -4,10 +4,11 @@ import { Card, CardActions, CardContent, Button, Typography } from '@material-ui
 import { Box } from "@mui/material";
 import './ListaTema.css';
 import Tema from '../../../model/Tema';
-import useLocalStorage from 'react-use-localstorage';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { busca } from '../../../services/Service';
 import { toast } from 'react-toastify';
+import { TokenState } from '../../../store/tokens/tokenReducer';
 
 //Requisição dos temas, a const temas tem a função setTemas para atualizar com useState. O useState do tipo <Tema> inicializa com a model de tema num colchete vazio e o array também é inicializado vazio
 //Token é necessario no envio do Tema - pra isso precisamos capturar o Token que está armazenado no localStorage. o UseLocalStorage é inicializado com o valor 'token'
@@ -15,7 +16,8 @@ import { toast } from 'react-toastify';
 //useEffect - com navegate o useEffect vai verificar se o token tá vazio, se estiver o token estiver vazio,vai redirecionar para Login. Na segunda situação o useEffect vai ser usado para fazer a requisição na api e ela retorna todos os temas listados
 function ListaTema() {
     const [temas, setTemas] = useState<Tema[]>([])
-    const [token, setToken] = useLocalStorage('token');
+    const token = useSelector<TokenState, TokenState["tokens"]>(
+    (state) => state.tokens );
     let navigate = useNavigate();
 
     //Verificação = se o token estiver vazio('') então alerta para logar

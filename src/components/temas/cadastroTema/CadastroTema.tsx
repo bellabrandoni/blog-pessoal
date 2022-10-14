@@ -2,15 +2,18 @@ import React, { useState, useEffect, ChangeEvent } from 'react'
 import { Container, Typography, TextField, Button } from "@material-ui/core"
 import { useNavigate, useParams } from 'react-router-dom'
 import './CadastroTema.css';
-import useLocalStorage from 'react-use-localstorage';
+import { useSelector } from 'react-redux';
 import Tema from '../../../model/Tema';
 import { buscaId, post, put } from '../../../services/Service';
 import { toast } from 'react-toastify';
+import { TokenState } from './../../../store/tokens/tokenReducer';
 
 function CadastroTema() {
     let navigate = useNavigate();
     const { id } = useParams<{ id: string }>();
-    const [token, setToken] = useLocalStorage('token');
+    const token = useSelector<TokenState, TokenState["tokens"]>(
+        (state) => state.tokens
+    );
     const [tema, setTema] = useState<Tema>({
         id: 0,
         descricao: ''
@@ -27,7 +30,7 @@ function CadastroTema() {
                 draggable: false,
                 theme: "colored",
                 progress: undefined,
-                });
+            });
             navigate("/login")
 
         }
@@ -76,7 +79,7 @@ function CadastroTema() {
                 draggable: false,
                 theme: "colored",
                 progress: undefined,
-                });
+            });
         } else {
             post(`/temas`, tema, setTema, {
                 headers: {
@@ -92,7 +95,7 @@ function CadastroTema() {
                 draggable: false,
                 theme: "colored",
                 progress: undefined,
-                });
+            });
         }
         back()
 
